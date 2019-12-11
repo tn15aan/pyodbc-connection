@@ -16,17 +16,35 @@ cursor = docker_Northwind.cursor()
 cursor.execute("SELECT * FROM Customers WHERE city LIKE 'London'")
 
 # Fetching data from the executed SQL command and printing
-row = cursor.fetchone()
-print(row)
+# row = cursor.fetchone()
+# print(row)
+#
+# # Cursors maintaining state
+# print(cursor.fetchone())
+#
+# # Accessing specific data
+#     # use the column name as an attribute of the entry
+# row = cursor.fetchone()
+# print(row)
+# print(row.CompanyName, row.ContactName)
+#
+# print(type(cursor))
+# print(type(row))
 
-# Cursors maintaining state
-print(cursor.fetchone())
+# Fetchall method - bad practice
+rows_all = cursor.fetchall()
+print(rows_all)
+print(len(rows_all))
+print(type(rows_all))
 
-# Accessing specific data
-    # use the column name as an attribute of the entry
-row = cursor.fetchone()
-print(row)
-print(row.CompanyName, row.ContactName)
+for row in rows_all:
+    print(row.ContactName, '-', row.CompanyName, '-', row.Fax)
 
-print(type(cursor))
-print(type(row))
+# To get lots of data - use a while loop and fetchone at a time
+rows = cursor.execute("SELECT * From Products")
+
+while True:
+    record = cursor.fetchone()
+    if record is None:
+        break
+    print(record.UnitPrice)
